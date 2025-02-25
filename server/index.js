@@ -12,7 +12,7 @@ connectDB();
 
 // Middleware
 app.use(express.json()); // Giúp Express hiểu dữ liệu JSON từ client
-app.use(cors()); // Kích hoạt CORS cho frontend gọi API từ domain khác
+app.use(cors('http://localhost:5173')); // Kích hoạt CORS cho frontend gọi API từ domain khác
 
 app.use('/api/products',productRouter);
 app.use('/api/auth', authRouter);

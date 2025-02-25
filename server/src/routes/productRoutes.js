@@ -5,7 +5,7 @@ import { authorize } from '../middlewares/roleMiddleware.js';
 
 const productRouter = express.Router();
 
-productRouter.get('/',authenticate, getProducts);
+productRouter.get('/', getProducts);
 productRouter.post('/',authenticate,authorize('admin'), createProduct);
 productRouter.get('/:id', getProductById);
 productRouter.put('/:id', updateProduct);
