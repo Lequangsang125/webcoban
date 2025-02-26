@@ -7,7 +7,7 @@ export const getProducts = async (req, res) => {
         if (products.length > 0) {
             return res.status(200).json({
                 message: "Thành công",
-                data: products
+                products: products
             });
         }
         return res.status(404).json({

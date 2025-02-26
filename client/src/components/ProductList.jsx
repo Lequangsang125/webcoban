@@ -1,34 +1,20 @@
-// import { useEffect, useState } from "react";
-// import { getProducts } from "../api/productApi";
+import React from 'react'
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from '../api/productApi';
 
 const ProductList = () => {
-//   const [products, setProducts] = useState([]);
-// console.log("Dữ liệu products nhận được:", products);
+  const { data, error, isLoading} = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+  });
 
-//   useEffect(() => {
-//     const fetchProducts = async () => {
-//       try {
-//         const data = await getProducts();
-//         setProducts(data);
-//       } catch (error) {
-//         console.error("Lỗi lấy danh sách sản phẩm:", error);
-//       }
-//     };
-const apiProduct = 'http://localhost:3000/api/products'
-fetch(apiProduct)
-.then(function(response){
-    return response.json()
-    //JSON.parse: JSON -> JS type
-})
-.then(function(post){
-    console.log(post);
-    
-})
-//     fetchProducts();
-//   }, []);
 
+  if(isLoading) return <p>Đang tải dữ liệu</p>
+  if(error) return <p>Lỗi</p>
+  const products = data || []; 
   return (
-    <div className="container mx-auto p-5">
+    <div>
+       <div className="container mx-auto p-5">
       <h1 className="text-2xl font-bold mb-5">Danh sách sản phẩm</h1>
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
@@ -40,7 +26,7 @@ fetch(apiProduct)
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {data.products.map((product) => (
             <tr key={product._id} className="text-center">
               <td className="border px-4 py-2">{product._id}</td>
               <td className="border px-4 py-2">{product.name}</td>
@@ -54,7 +40,8 @@ fetch(apiProduct)
         </tbody>
       </table>
     </div>
-  );
-};
+    </div>
+  )
+}
 
-export default ProductList;
+export default ProductList
